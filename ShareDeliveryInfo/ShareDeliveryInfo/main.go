@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ShareDeliveryInfo/smartcontract"
+	"ShareDeliveryInfo/mycontract"
 	"ShareDeliveryInfo/socket"
 	"github.com/ethereum/go-ethereum/common"
 	"log"

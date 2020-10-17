@@ -4,7 +4,7 @@ import (
     "fmt"
     "log"
     "net"
-    "ShareDeliveryInfo/smartcontract"
+    "ShareDeliveryInfo/mycontract"
     "github.com/FISCO-BCOS/go-sdk/client"
     // "strings"
 )
