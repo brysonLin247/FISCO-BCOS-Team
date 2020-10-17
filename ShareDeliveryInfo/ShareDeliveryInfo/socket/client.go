@@ -47,7 +47,7 @@ func cConnHandler(c net.Conn) {
 }
 
 func ClientSocket() {
-    conn, err := net.Dial("tcp", "127.0.0.1:8087")
+    conn, err := net.Dial("tcp", "127.0.0.1:1234")
     if err != nil {
         fmt.Println("客户端建立连接失败")
         return

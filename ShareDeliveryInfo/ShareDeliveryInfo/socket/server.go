@@ -1,6 +1,7 @@
 package socket
 
 import (
+    // "strconv"
     "fmt"
     "log"
     "net"
@@ -34,15 +35,23 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
         // //3.3 根据输入流进行逻辑处理
 
         originStr := string(buf[0:cnt])
+        fmt.Println("输入字符："+originStr)
 
-        package_uid := string(buf[10:13])
-        station := string(buf[23:31])
+        fmt.Printf("包裹%s当前到达的站点: %s\n ",string(buf[11:14]), string(buf[28:36]))
 
+        package_uid, err := strconv.ParseUint(string(buf[11:14]),16,64)
+        if err!=nil{
+          log.Fatal(err)
+        }
+        station := string(buf[28:36])
 
-        fmt.Println("站点读卡器读取包裹编号->" + package_uid + "到达站点" + station)
-        c.Write([]byte("服务器端回复" + originStr + "\n"))
+        // package_uid := uint64(1)
+        // station := "test station"
 
-        setTransaction,err := session.set(package_uid, station)
+        fmt.Printf("站点读卡器读取包裹编号->%d, 到达站点: %s \n", package_uid, station)
+        // c.Write([]byte("服务器端回复" + originStr + "\n"))
+
+        setTransaction,err := session.Set(package_uid, station)
         if err!=nil {
           log.Fatal(err)
         }
@@ -53,12 +62,12 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
         }
         fmt.Printf("信息已上链，获得的结果收据: %s\n", receipt.GetTransactionHash())
 
-        s, err := session.get(package_uid)
+        s, err := session.Get(package_uid)
         if err!=nil{
           log.Fatal(err)
         }
-        fmt.Println("包裹%d当前经过的路径: %s\n ",package_uid, s)
 
+        fmt.Printf("包裹%d: %s\n ",package_uid, s)
 
         //c.Close() //关闭client端的连接，telnet 被强制关闭
 
@@ -71,7 +80,7 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
 //开启serverSocket
 func ServerSocket(session mycontract.ShareDeliveryInfoSession, client *client.Client) {
     //1.监听端口
-    server, err := net.Listen("tcp", ":8087")
+    server, err := net.Listen("tcp", ":1234")
 
     if err != nil {
         fmt.Println("开启socket服务失败")
