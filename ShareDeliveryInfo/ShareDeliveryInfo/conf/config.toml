@@ -1,0 +1,21 @@
+
+[Network]
+#type rpc or channel
+Type="channel"
+CAFile="conf/sdk/ca.crt"
+Cert="conf/sdk/sdk.crt"
+Key="conf/sdk/sdk.key"
+[[Network.Connection]]
+NodeURL="183.3.158.22:20200"
+GroupID=1
+
+[Account]
+# only support PEM format for now
+KeyFile="conf/accounts/0x948c98f9a2cc4534dd51f774ea585b1277d9097b.pem"
+
+[Chain]
+ChainID=1
+SMCrypto=false
+
+[log]
+Path="./"
