@@ -29,7 +29,8 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
     //3.循环读取网络数据流
     for {
         //3.1 网络数据流读入 buffer
-        read_cnt ++;
+        read_cnt++;
+
 
         cnt, err := c.Read(buf)
         //3.2 数据读尽、读取错误 关闭 socket 连接
@@ -39,7 +40,9 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
         }
 
         currBytes := buf[0:cnt]
+
         bytes = append(bytes, currBytes...)
+        fmt.Println("读取计数："+strconv.Itoa(read_cnt) + "当前读取字符："+string(buf[0:cnt])+"所有字符："+string(bytes));
 
         if (read_cnt % 4 == 0) {
             // //3.3 根据输入流进行逻辑处理
