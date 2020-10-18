@@ -42,6 +42,7 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
 
     originStr := string(bytes)
     fmt.Println("输入字符："+originStr)
+    fmt.Println(bytes)
 
     fmt.Printf("包裹%s当前到达的站点: %s\n ",string(bytes[9:12]), string(bytes[24:33]))
 
