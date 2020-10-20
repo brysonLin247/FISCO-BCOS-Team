@@ -51,13 +51,13 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
             fmt.Println("输入字符："+originStr)
             fmt.Println(bytes)
 
-            fmt.Printf("包裹%s当前到达的站点: %s\n ",string(bytes[0:7]), string(bytes[8:16]))
+            fmt.Printf("包裹%s当前到达的站点: %s\n ",string(bytes[0:7]), string(bytes[8:17]))
 
             package_uid, err := strconv.ParseUint(string(bytes[0:7]),16,64)
             if err!=nil{
               log.Fatal(err)
             }
-            station := string(bytes[8:16])
+            station := string(bytes[8:17])
 
             // package_uid := uint64(1)
             // station := "test station"
