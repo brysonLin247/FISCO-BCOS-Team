@@ -15,7 +15,7 @@ contract ShareDeliveryInfo {
 
     //快递到达新站点，更新信息
     function set(uint64 _pkg_uid, string station) public {
-        delivery_path[_pkg_uid] = strConcat(delivery_path[_pkg_uid], station);
+        delivery_path[_pkg_uid] = station;
     }
 
 }
