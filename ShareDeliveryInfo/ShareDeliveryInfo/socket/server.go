@@ -66,7 +66,7 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
 
             fmt.Printf("快递站点：%s读取到编号：%d 的包裹 \n", station, package_uid)
             // c.Write([]byte("服务器端回复" + originStr + "\n"))
-            station = strings.Join([]string{time.Now().Format("”2006-01-02 15:04:05"), ": 快件", strconv.Itoa(package_uid), "到达分拣中心: ", station},"");
+            station = strings.Join([]string{time.Now().Format("”2006-01-02 15:04:05"), ": 快件", strconv.Itoa(int(package_uid)), "到达分拣中心: ", station},"");
 
             setTransaction,err := session.Set(package_uid, station)
             if err!=nil {

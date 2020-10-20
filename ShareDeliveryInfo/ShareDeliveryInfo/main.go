@@ -44,7 +44,7 @@ func main() {
 
 
 	// 调用已部署的ShareDeliveryInfo合约
-	contractAddress := common.HexToAddress("0xc2203680d3b911d87266b4e240b291ef8e0ee744")
+	contractAddress := common.HexToAddress("0x81ffb38f6b61941b7bb39b854eadd7fed2a29f4d")
 	ShareLogisticInfoInstance, err := mycontract.NewShareDeliveryInfo(contractAddress, client)
 	if err != nil {
 		log.Fatal(err)
