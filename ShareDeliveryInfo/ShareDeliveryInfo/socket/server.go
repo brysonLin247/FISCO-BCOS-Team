@@ -2,6 +2,8 @@ package socket
 
 import (
     "strconv"
+    "strings"
+    "time"
     "fmt"
     "log"
     "net"
@@ -42,16 +44,16 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
         currBytes := buf[0:cnt]
 
         bytes = append(bytes, currBytes...)
-        fmt.Println("读取计数："+strconv.Itoa(read_cnt) + "当前读取字符："+string(buf[0:cnt])+"所有字符："+string(bytes));
+        //fmt.Println("读取计数："+strconv.Itoa(read_cnt) + "当前读取字符："+string(buf[0:cnt])+"所有字符："+string(bytes));
 
         if (read_cnt % 2 == 0) {
         // //3.3 根据输入流进行逻辑处理
 
-            originStr := string(bytes)
-            fmt.Println("输入字符："+originStr)
-            fmt.Println(bytes)
+            // originStr := string(bytes)
+            // fmt.Println("输入字符："+originStr)
+            // fmt.Println(bytes)
 
-            fmt.Printf("包裹%s当前到达的站点: %s\n ",string(bytes[0:7]), string(bytes[8:17]))
+            //fmt.Printf("包裹%s当前到达的站点: %s\n ",string(bytes[0:7]), string(bytes[8:17]))
 
             package_uid, err := strconv.ParseUint(string(bytes[0:7]),16,64)
             if err!=nil{
@@ -62,8 +64,9 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
             // package_uid := uint64(1)
             // station := "test station"
 
-            fmt.Printf("站点读卡器读取包裹编号->%d, 到达站点: %s \n", package_uid, station)
+            fmt.Printf("快递站点：%s读取到编号：%d 的包裹 \n", station, package_uid)
             // c.Write([]byte("服务器端回复" + originStr + "\n"))
+            station = strings.Join([]string{time.Now().Format("2020/10/22 13:00"), ": 快件", string(bytes[0:7]), "到达分拣中心: "},station);
 
             setTransaction,err := session.Set(package_uid, station)
             if err!=nil {
@@ -81,7 +84,7 @@ func connHandler(c net.Conn, session mycontract.ShareDeliveryInfoSession, client
               log.Fatal(err)
             }
 
-            fmt.Printf("包裹%d信息已录入站点: %s节点\n ",package_uid, s)
+            fmt.Printf("包裹%d快递信息: %s \n ",package_uid, s)
 
             //c.Close() //关闭client端的连接，telnet 被强制关闭
 
